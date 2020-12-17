@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: echo
+  name: echo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: echo
+  template:
+    metadata:
+      labels:
+        run: echo
+    spec:
+      containers:
+      - image: kennethreitz/httpbin
+        imagePullPolicy: IfNotPresent
+        name: echo-server
+        ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP
+            hostPort: 80
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+      restartPolicy: Always
